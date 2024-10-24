@@ -56,7 +56,6 @@ class ArticleResource extends Resource
                     ->schema(function(Get $get) {
                         $fields = [];
                         $category = Category::find($get('category_id'));
-//                        dd($category);
                         if ($category) {
                             foreach ($category->additional_params as $item) {
                                 if ($item['type'] == 'TextInput') {
@@ -67,8 +66,6 @@ class ArticleResource extends Resource
                                 }
                             }
                         }
-
-
                         return $fields;
                     })
                     ->key('additional_params')->label(__('cms.articleFields.additional_params')),
