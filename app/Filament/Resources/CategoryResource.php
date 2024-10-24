@@ -53,7 +53,14 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('name')->searchable()->label(__('cms.category.name')),
                 TextColumn::make('description')->label(__('cms.category.description')),
+                Tables\Columns\TextColumn::make('count')->numeric()->label(__('cms.category.count')),
                 ViewColumn::make('additional_params')->view('category-additional-params')->label(__('cms.category.additionalParamsName')),
+                Tables\Columns\TextColumn::make('created_at')->label(__('cms.created_at'))
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->label(__('cms.updated_at'))
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //
