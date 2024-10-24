@@ -51,7 +51,7 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->label(__('cms.category.name')),
+                TextColumn::make('name')->searchable()->label(__('cms.category.name')),
                 TextColumn::make('description')->label(__('cms.category.description')),
                 ViewColumn::make('additional_params')->view('category-additional-params')->label(__('cms.category.additionalParamsName')),
             ])
