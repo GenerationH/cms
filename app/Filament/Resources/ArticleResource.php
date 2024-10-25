@@ -116,7 +116,12 @@ class ArticleResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->after(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Services\Article::updateTagsCount($record->tags);
+                            \App\Services\Article::updateCategoryCount($record->category_id);
+                        }
+                    }),
                 ]),
             ]);
     }
