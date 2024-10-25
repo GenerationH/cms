@@ -23,4 +23,11 @@ class Article extends Model
     public function tags(): BelongsToMany{
         return $this->belongsToMany(Tag::class, 'article_tag_relation');
     }
+
+    public function delete(): ?bool
+    {
+        $this->tags()->detach($this->tags->pluck('id')->toArray());
+        return parent::delete();
+    }
+
 }

@@ -16,11 +16,7 @@ class CreateArticle extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $categoryArticleCount = Article::where('category_id', $this->getRecord()['category_id'])->count();
-        Category::where('id', $this->getRecord()['category_id'])->update(['count' => $categoryArticleCount]);
-        foreach ($this->getRecord()['tags'] as $tag) {
-            $tagArticleCount = Db::table('article_tag_relation')->where('tag_id', $tag['id'])->count();
-            Tag::where('id', $tag['id'])->update(['count' => $tagArticleCount]);
-        }
+        \App\Services\Article::updateCategoryCount($this->getRecord()['category_id']);
+        \App\Services\Article::updateTagsCount($this->getRecord()['tags']);
     }
 }

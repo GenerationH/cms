@@ -7,6 +7,7 @@ use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
@@ -108,6 +109,10 @@ class ArticleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->after(function ($record) {
+                    \App\Services\Article::updateTagsCount($record->tags);
+                    \App\Services\Article::updateCategoryCount($record->category_id);
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
